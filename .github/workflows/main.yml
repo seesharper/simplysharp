@@ -23,4 +23,4 @@ jobs:
         env: # Or as an environment variable
           GITHUB_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           IS_SECURE_BUILDENVIRONMENT: ${{ secrets.IS_SECURE_BUILDENVIRONMENT }}
-          NUGET_APIKEY: ${{ secrets.NUGET_APIKEY }}
+          MARKETPLACE_ACCESSTOKEN: ${{ secrets.MARKETPLACE_ACCESSTOKEN }}
