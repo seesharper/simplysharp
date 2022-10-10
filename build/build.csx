@@ -36,7 +36,7 @@ AsyncStep deploy = async () =>
 
     await GitHub.Release();
 
-    await Command.ExecuteAsync("docker", $"run --rm  -v {BuildContext.RepositoryFolder}:/workspace vsce publish -p {MARKETPLACE_ACCESSTOKEN} -o build/Artifacts/Marketplace/simplysharp-{BuildContext.LatestTag}.vsix --no-git-tag-version --no-update-package-json {BuildContext.LatestTag}");
+    await Command.ExecuteAsync("docker", $"run --rm  -v {BuildContext.RepositoryFolder}:/workspace vsce publish -p {MARKETPLACE_ACCESSTOKEN} -i build/Artifacts/Marketplace/simplysharp-{BuildContext.LatestTag}.vsix --no-git-tag-version --no-update-package-json {BuildContext.LatestTag}");
 
 };
 
