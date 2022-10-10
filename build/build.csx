@@ -1,7 +1,10 @@
 #load "nuget:Dotnet.Build, 0.16.1"
 #load "nuget:dotnet-steps, 0.0.2"
 
-var pathToExtensionArtifact = FileUtils.CreateDirectory(BuildContext.ArtifactsFolder, "Marketplace");
+var pathToExtensionArtifactsFolder = FileUtils.CreateDirectory(BuildContext.ArtifactsFolder, "Marketplace");
+var pathToExtensionArtifact = Path.Combine(pathToExtensionArtifactsFolder, $"simplysharp-{BuildContext.LatestTag}");
+
+var MARKETPLACE_ACCESSTOKEN = Environment.GetEnvironmentVariable("MARKETPLACE_ACCESSTOKEN");
 
 [StepDescription("Creates the extension package")]
 AsyncStep pack = async () =>
@@ -15,7 +18,26 @@ AsyncStep pack = async () =>
 AsyncStep deploy = async () =>
 {
     await pack();
-    await Artifacts.Deploy();
+    if (!BuildEnvironment.IsSecure)
+    {
+        Logger.Log("Publishing artifacts can only be done in a secure environment");
+        return;
+    }
+
+    await GitHub.CreateChangeLog();
+
+    if (!BuildContext.IsTagCommit)
+    {
+        Logger.Log("Publishing artifacts can only be done if we are on a tag commit");
+        return;
+    }
+
+    Git.Open(BuildContext.RepositoryFolder).RequireCleanWorkingTree();
+
+    await GitHub.Release();
+
+    await Command.ExecuteAsync("docker", $"run --rm  -v {BuildContext.RepositoryFolder}:/workspace vsce publish -p {MARKETPLACE_ACCESSTOKEN} -o build/Artifacts/Marketplace/simplysharp-{BuildContext.LatestTag}.vsix --no-git-tag-version --no-update-package-json {BuildContext.LatestTag}");
+
 };
 
 await StepRunner.Execute(Args);
