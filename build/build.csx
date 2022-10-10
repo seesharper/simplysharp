@@ -10,7 +10,7 @@ AsyncStep pack = async () =>
 
     await Command.ExecuteAsync("docker", "build --tag vsce \"https://github.com/microsoft/vscode-vsce.git#main\"");
     WriteLine(BuildContext.SourceFolder);
-    await Command.ExecuteAsync("docker", $"run --rm  -v {BuildContext.RepositoryFolder}:/workspace vsce package -o build/Artifacts/Marketplace/test.vsix");
+    await Command.ExecuteAsync("docker", $"run --rm  -v {BuildContext.RepositoryFolder}:/workspace vsce package -o build/Artifacts/Marketplace/simplysharp-{BuildContext.LatestTag}.vsix --no-git-tag-version --no-update-package-json {BuildContext.LatestTag}");
 };
 //docker run --rm -it -v "$(pwd)":/workspace vsce publish
 [DefaultStep]
