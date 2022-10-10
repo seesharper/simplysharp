@@ -1,0 +1,25 @@
+{
+  "name": "simplysharp",
+  "publisher": "Bernhard Richter",
+  "displayName": "SimplySharp",
+  "repository": {
+    "url": "https://github.com/seesharper/simplysharp",
+    "type": "git"
+  },
+  "description": "A collection of dead simple C# code snippets for Visual Studio Code",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.72.0"
+  },
+  "categories": [
+    "Snippets"
+  ],
+  "contributes": {
+    "snippets": [
+      {
+        "language": "csharp",
+        "path": "./snippets/snippets.code-snippets"
+      }
+    ]
+  }
+}

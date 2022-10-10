@@ -1,0 +1,120 @@
+{
+    "public record": {
+        "prefix": "pr",
+        "body": [
+            "public record ${TM_FILENAME/(.*)\\..+$/$1/}(${1});",
+        ],
+        "description": "public class"
+    },
+    "public class": {
+        "prefix": "pc",
+        "body": [
+            "public class ${TM_FILENAME/(.*)\\..+$/$1/}",
+            "{",
+            "\t${1}",
+            "}",
+        ],
+        "description": "public class"
+    },
+    "public static class": {
+        "prefix": "psc",
+        "body": [
+            "public static class ${TM_FILENAME/(.*)\\..+$/$1/}",
+            "{",
+            "\t${1}",
+            "}",
+        ],
+        "description": "public static class"
+    },
+    "public interface": {
+        "prefix": "pi",
+        "body": [
+            "public interface ${TM_FILENAME/(.*)\\..+$/$1/}",
+            "{",
+            "\t${1}",
+            "}",
+        ],
+        "description": "public interface"
+    },
+    "public static method": {
+        "prefix": "psm",
+        "body": [
+            "public static ${1:void} ${2:Method}(${3})",
+            "{",
+            "\t${4}",
+            "}"
+        ],
+        "description": "public static method"
+    },
+    "extension method": {
+        "prefix": "em",
+        "body": [
+            "public static ${1:void} ${2:Method}(this ${3:TYPE} value)",
+            "{",
+            "\t${4}",
+            "}"
+        ],
+        "description": "extension method"
+    },
+    "public method": {
+        "prefix": "pm",
+        "body": [
+            "public ${1:void} ${2:Method}(${3})",
+            "{",
+            "\t${4}",
+            "}"
+        ],
+        "description": "public method"
+    },
+    "interface method": {
+        "prefix": "im",
+        "body": [
+            "${1:void} ${2:Method}(${3});",
+        ],
+        "description": "interface method"
+    },
+    "public async method": {
+        "prefix": "pas",
+        "body": [
+            "public async ${1:void} ${1:Method}(${3})",
+            "{",
+            "\t${4}",
+            "}"
+        ],
+        "description": "public async method"
+    },
+    "test method": {
+        "prefix": "tm",
+        "body": [
+            "[Fact]",
+            "public void ${1:Method}()",
+            "{",
+            "\t${2}",
+            "}"
+        ],
+        "description": "test method"
+    },
+    "async test method": {
+        "prefix": "atm",
+        "body": [
+            "[Fact]",
+            "public async Task ${1:Method}()",
+            "{",
+            "\t${2}",
+            "}"
+        ],
+        "description": "test method"
+    },
+    "File scoped namespace": {
+        "prefix": "ns",
+        "body": [
+            "namespace ${TM_DIRECTORY/(.*src.)|(src.*)|([\\/])/${2}${3:+.}/g}",
+            "{",
+            "    public class ${TM_FILENAME/(.*)\\..+$/$1/}",
+            "    {        ",
+            "    }",
+            "}"
+        ],
+        "description": "file scoped namespace"
+    },
+}
