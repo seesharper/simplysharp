@@ -108,12 +108,8 @@
     "File scoped namespace": {
         "prefix": "ns",
         "body": [
-            "namespace ${TM_DIRECTORY/(.*src.)|(src.*)|([\\/])/${2}${3:+.}/g}",
-            "{",
-            "    public class ${TM_FILENAME/(.*)\\..+$/$1/}",
-            "    {        ",
-            "    }",
-            "}"
+            "namespace ${TM_DIRECTORY/(.*src.)|(src.*)|([\\/])/${2}${3:+.}/g};",
+            "${1}"
         ],
         "description": "file scoped namespace"
     },
