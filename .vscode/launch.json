@@ -25,7 +25,7 @@
                 "program": "${env:USERPROFILE}/.dotnet/tools/dotnet-script.exe",
             },
             "cwd": "${workspaceFolder}",
-            "stopAtEntry": true,
+            "stopAtEntry": false,
         }
     ]
 }

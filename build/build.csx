@@ -1,6 +1,8 @@
 #load "nuget:Dotnet.Build, 0.16.1"
 #load "nuget:dotnet-steps, 0.0.2"
 
+using static ChangeLog;
+
 var pathToExtensionArtifactsFolder = FileUtils.CreateDirectory(BuildContext.ArtifactsFolder, "Marketplace");
 var pathToExtensionArtifact = Path.Combine(pathToExtensionArtifactsFolder, $"simplysharp-{BuildContext.LatestTag}");
 
@@ -17,13 +19,15 @@ AsyncStep pack = async () =>
 [StepDescription("Deploys packages if we are on a tag commit in a secure environment.")]
 AsyncStep deploy = async () =>
 {
-    // await GitHub.CreateChangeLog();
     await pack();
     if (!BuildEnvironment.IsSecure)
     {
         Logger.Log("Publishing artifacts can only be done in a secure environment");
         return;
     }
+
+    await ChangeLogFrom(BuildContext.Owner, BuildContext.ProjectName, Environment.GetEnvironmentVariable("GITHUB_REPO_TOKEN"))
+        .Generate(Path.Combine(BuildContext.RepositoryFolder, "CHANGELOG.md"));
 
     await GitHub.CreateChangeLog();
 
