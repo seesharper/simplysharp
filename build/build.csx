@@ -17,6 +17,7 @@ AsyncStep pack = async () =>
 [StepDescription("Deploys packages if we are on a tag commit in a secure environment.")]
 AsyncStep deploy = async () =>
 {
+    // await GitHub.CreateChangeLog();
     await pack();
     if (!BuildEnvironment.IsSecure)
     {
